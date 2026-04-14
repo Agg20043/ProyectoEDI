@@ -30,7 +30,7 @@ public:
     int get_num_seguidores() const { return num_seguidores; }
     void set_num_seguidores(int num_seguidores) { this->num_seguidores = num_seguidores; }
 
-    // --- MÉTODOS PARA LA LISTA DE CANCIONES ---
+   
     void insertarCancion(const string& titulo, const string& genero, int duracion);
     cancion* buscarCancion(const string& titulo) const;
     int numElementos() const;
