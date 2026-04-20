@@ -39,38 +39,38 @@ public:
 
 //Pre:
 //Post: Getter que devuelve el mes de una fecha
-//Complejidad:
+//Complejidad:O(1)
     int getMes() const;
 
 //Pre:
-//Post:
-//Complejidad:
+//Post: Getter que devuelve el año de una fecha
+//Complejidad:O(1)
     int getAnio() const;
 
 //Pre:
-//Post:
-//Complejidad:
+//Post: Setter que modifica el dia de una fecha
+//Complejidad:O(1)
     void setDia(int dia);
 
 //Pre:
-//Post:
-//Complejidad:
+//Post: Setter que modifica el mes de una fecha
+//Complejidad:O(1)
     void setMes(int mes);
 
 //Pre:
-//Post:
-//Complejidad:
+//Post: Setter que modifica el año de una fecha
+//Complejidad:O(1)
     void setAnio(int anio);
 
 
 //Pre:
-//Post:
-//Complejidad:
+//Post: Muestra por pantalla una fecha con su día, mes y año
+//Complejidad:O(1)
     void mostrar() const;
 
 //Pre:
-//Post:
-//Complejidad:
+//Post: Devuelve una fecha en forma de string
+//Complejidad:O(1)
     string pasarCadena() const;
 };
 
