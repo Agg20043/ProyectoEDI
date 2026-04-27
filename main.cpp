@@ -10,7 +10,7 @@ using namespace std;
 
 
 
-int main() {
+/*int main() {
 ejecutarPrueba();
 
     ejecutar_pruebas_artista();
@@ -21,4 +21,4 @@ ejecutarPrueba();
     ejecutar_pruebas_gestor_usuarios();
 
     return 0;
-}
+}*/

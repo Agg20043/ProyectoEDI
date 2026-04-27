@@ -30,5 +30,5 @@ add_executable(untitled3 main.cpp
         controlador/Sistema.cpp
         modelo/PruebaSistema.h
         controlador/PruebaSistema.cpp
-        controlador/progPrincipal.cpp
+        progPrincipal.cpp
 )

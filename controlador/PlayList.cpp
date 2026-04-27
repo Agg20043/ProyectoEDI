@@ -98,13 +98,13 @@ void PlayList::reproducirTodo() {
     }
 
     cout << "\n[Reproduciendo PlayList: " << nombre << "]" << endl;
-    
+
     for (int i = 0; i < numCanciones; i++) {
         cancion* actual = colaReproduccion->getPrimero();
-        
 
-        // actual->mostrar(); 
-        
+
+         actual->mostrar();
+
         colaReproduccion->desencolar();
         colaReproduccion->encolar(actual);
     }

@@ -46,10 +46,14 @@ persona::~persona() {
     delete lArtistasFavoritos;
 }
 void persona::mostrar() const {
-    cout << id << endl;
-    cout << email << endl;
-    cout << password << endl;
-    fechaNacimiento->mostrar();
+    cout << "--- PERFIL DE USUARIO ---" << endl;
+    cout << "ID: " << id << endl;
+    cout << "Nombre: " << nombre << endl;
+    cout << "Email: " << email << endl;
+    cout << "Contrasena: " << password << endl;
+    cout << "Nacimiento: ";
+    if (fechaNacimiento != nullptr) fechaNacimiento->mostrar();
+    cout << "-------------------------" << endl;
 }
 
 
@@ -84,6 +88,9 @@ void persona::anadirCancionPlayList(const string& nombrePlayList, cancion* c) {
 
 void persona::reproducirPlayList() const {
     lPlayLists->moverPrimero();
+    if (lPlayLists->alFinal()) {
+        cout<<"[AVISO]Este usuario no tiene ninguna PlayList creada"<<endl;
+    }
     while(!lPlayLists->alFinal()) {
         // Usamos tu método reproducirTodo()
         lPlayLists->consultar()->reproducirTodo();
@@ -105,11 +112,24 @@ PlayList* persona::compartirPlayList(const string& nombrePlayList) const {
 void persona::anadirPlayListCompartida(PlayList* playlist) {
     lPlayLists->insertar(playlist);
 }
+bool persona::eliminarPlayList(string nombrePlaylist) {
+    lPlayLists->moverPrimero();
+
+    while (!lPlayLists->alFinal()) {
+
+        if (lPlayLists->consultar()->getNombre() == nombrePlaylist) {
+            lPlayLists->eliminar();
+            return true;
+        }
+        lPlayLists->avanzar();
+    }
+    return false;
+}
 
 // ==========================================
 // MÉTODOS DE ARTISTAS FAVORITOS
 // ==========================================
-void persona::insertarArtistaFavorito(Artista* artista) { // [cite: 81, 82]
+void persona::insertarArtistaFavorito(Artista* artista) {
     lArtistasFavoritos->moverPrimero();
     while(!lArtistasFavoritos->alFinal()) {
         if(lArtistasFavoritos->consultar()->get_nombre() == artista->get_nombre()) return; // Sin duplicados

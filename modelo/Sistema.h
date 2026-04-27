@@ -24,25 +24,31 @@ private:
     void cargarPlayList();
 
 public:
-    // 1. Constructores
+
     Sistema();
     Sistema(string nombreSistema);
-    Sistema(const Sistema &otro); // Constructor por copia
+    Sistema(const Sistema &otro);
 
-    // 10. Destructor
+
     ~Sistema();
 
-    // Operaciones principales
+
     void mostrarUsuarios() const;   // 6
     void mostrarArtistas() const;   // 7
     void buscarUsuario(string nombreYApellidos) const; // 8
     void registrarArtista(Artista* a);
     Artista* buscarArtista(const string& nombre) const;
-    // 9. Compartir playlist
-    void compartirPlaylist(string nombreOrigen, string nombrePlaylist, string nombreReceptor);
+
+    void compartirPlaylist(string nombreOrigen, string nombrePlaylist, string nombreDestino);
 
     // Getters básicos
     string getNombreSistema() const { return nombreSistema; }
+
+    void reproducirPlaylistsUsuario(string nombreUsuario) const;
+    void eliminarPlaylistUsuario(string nombreUsuario, string nombrePlaylist);
+    void anadirFavoritoUsuario(string nombreUsuario, string nombreArtista);
+    void eliminarFavoritoUsuario(string nombreUsuario, string nombreArtista);
+    void mostrarArtistaTop() const;
 };
 
 #endif

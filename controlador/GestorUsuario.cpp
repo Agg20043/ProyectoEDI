@@ -65,12 +65,12 @@ void GestorUsuarios::insertar(const string& id, const string& nombre, const stri
 }
 
 // 3. Buscar
-persona* GestorUsuarios::buscar(const string& apellidosNombre) {
+persona* GestorUsuarios::buscar(const string& buscarPersona) {
     lUsuarios->moverPrimero();
 
     while (!lUsuarios->alFinal()) {
         persona* p = lUsuarios->consultar();
-        if (p->get_nombre() == apellidosNombre) {
+        if (p->get_id() == buscarPersona || p->get_nombre() == buscarPersona) {
             return p; // Devuelve el puntero a la persona encontrada
         }
         lUsuarios->avanzar();
