@@ -318,24 +318,46 @@ void Sistema::anadirFavoritoUsuario(string nombreUsuario, string nombreArtista) 
     persona* u = usuarios->buscar(nombreUsuario);
     Artista* a = artistas->buscar(nombreArtista);
 
-    if (u && a) {
-        u->insertarArtistaFavorito(a);
-        cout << "Artista '" << nombreArtista << "' anadido a los favoritos de " << nombreUsuario << "." << endl;
-    } else {
-        cout << "Error: Usuario o Artista no encontrado en el sistema." << endl;
+    if (!u) {
+        cout << "[ERROR] El usuario con ID '" << nombreUsuario << "' no existe en el sistema." << endl;
+        return;
     }
+    if (!a) {
+        cout << "[ERROR] El artista '" << nombreArtista << "' no existe en el sistema." << endl;
+        return;
+    }
+
+    u->insertarArtistaFavorito(a);
+
+    a->incrementarSeguidores();
+
+    cout << "[EXITO] Artista '" << a->get_nombre() << "' anadido a los favoritos de " << u->get_nombre() << "." << endl;
 }
 
 void Sistema::eliminarFavoritoUsuario(string nombreUsuario, string nombreArtista) {
     persona* u = usuarios->buscar(nombreUsuario);
-    if (u) {
-        u->eliminarArtistaFavorito(nombreArtista);
-        cout << "Se ha intentado eliminar al artista de favoritos." << endl;
+
+    if (!u) {
+        cout << "[ERROR] El usuario con ID '" << nombreUsuario << "' no existe en el sistema." << endl;
+        return;
+    }
+
+    // Intentamos eliminarlo de la lista personal del usuario
+    bool eliminado = u->eliminarArtistaFavorito(nombreArtista);
+
+    if (eliminado) {
+
+        Artista* a = artistas->buscar(nombreArtista);
+        if (a) {
+            a->decrementarSeguidores();
+        }
+
+        cout << "[EXITO] Se ha eliminado a '" << nombreArtista << "' de los favoritos de " << u->get_nombre() << "." << endl;
     } else {
-        cout << "Usuario no encontrado." << endl;
+        cout << "[ERROR] El artista '" << nombreArtista << "' no estaba en los favoritos de este usuario." << endl;
     }
 }
-
 void Sistema::mostrarArtistaTop() const {
-    cout << "Metodo en desarrollo (requiere recorrer la lista de GestorArtistas y comparar num_seguidores)." << endl;
+cout << "--- TOP ARTISTAS CON MAS SEGUIDORES DEL SISTEMA ---" << endl;
+artistas->mostrarTop();
 }

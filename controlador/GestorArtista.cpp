@@ -77,3 +77,35 @@ int GestorArtistas::numElementos() const {
     }
     return contador;
 }
+void GestorArtistas::mostrarTop() const {
+
+    if (lArtistas->estaVacia()) {
+        cout << "No hay artistas en el sistema." << endl;
+        return;
+    }
+
+
+    int maxSeguidores = 0;
+    Artista* artistaTop = nullptr;
+
+    // Recorremos la estructura para buscar el máximo
+    lArtistas->moverPrimero();
+    while (!lArtistas->alFinal()) {
+        Artista* a = lArtistas->consultar();
+
+        if (a->get_num_seguidores() > maxSeguidores) {
+            maxSeguidores = a->get_num_seguidores();
+            artistaTop = a;
+        }
+
+        lArtistas->avanzar();
+    }
+
+    // Imprimimos el resultado
+    if (artistaTop) {
+        cout << "El artista mas seguidores es: " << artistaTop->get_nombre()
+             << " con " << maxSeguidores << " seguidores." << endl;
+    } else {
+        cout << "No se pudo determinar el artista top." << endl;
+    }
+}

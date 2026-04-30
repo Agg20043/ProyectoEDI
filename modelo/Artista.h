@@ -36,7 +36,8 @@ public:
     int numElementos() const;
     
     void mostrar() const;
-
+    void incrementarSeguidores();
+    void decrementarSeguidores();
     bool operator==(const Artista& otro) const { return this->nombre == otro.nombre; }
     bool operator<(const Artista& otro) const { return this->nombre < otro.nombre; }
 };

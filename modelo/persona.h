@@ -70,7 +70,8 @@ public:
     bool eliminarPlayList(string nombrePlaylist);
 
     void insertarArtistaFavorito(Artista* artista);
-    void eliminarArtistaFavorito(const string& nombreArtista);
+
+    bool eliminarArtistaFavorito(const string &nombreArtista);
     void mostrarFavoritos() const;
 };
 

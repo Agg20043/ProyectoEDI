@@ -23,7 +23,7 @@ int menu(string nombreSistema) {
        cout << " 2. Buscar y mostrar un usuario" << endl;
        cout << " 3. Mostrar artistas y sus canciones" << endl;
        cout << " 4. Buscar y mostrar un artista" << endl;
-       cout << " 5. Reproducir playlists de un usuario" << endl; // Adaptado a tu método
+       cout << " 5. Reproducir playlists de un usuario" << endl;
        cout << " 6. Compartir playlist entre dos usuarios" << endl;
        cout << " 7. Eliminar playlist de un usuario" << endl;
        cout << " 8. Añadir artista a favoritos de un usuario" << endl;

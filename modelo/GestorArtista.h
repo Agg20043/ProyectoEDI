@@ -18,6 +18,9 @@ public:
 
     void insertar(Artista* artista);
     int numElementos() const;
+
+    void mostrarTop() const;
+
     Artista* buscar(const string& nombre) const;
     void mostrar() const;
 };

@@ -104,3 +104,12 @@ void Artista::mostrar() const {
     }
     cout << "=====================================" << endl;
 }
+void Artista::incrementarSeguidores() {
+    num_seguidores++; // Suma 1
+}
+
+void Artista::decrementarSeguidores() {
+    if (num_seguidores > 0) {
+        num_seguidores--;
+    }
+}

@@ -138,15 +138,17 @@ void persona::insertarArtistaFavorito(Artista* artista) {
     lArtistasFavoritos->insertar(artista);
 }
 
-void persona::eliminarArtistaFavorito(const string& nombreArtista) { // [cite: 83]
+bool persona::eliminarArtistaFavorito(const string &nombreArtista) {
     lArtistasFavoritos->moverPrimero();
     while(!lArtistasFavoritos->alFinal()) {
         if(lArtistasFavoritos->consultar()->get_nombre() == nombreArtista) {
             lArtistasFavoritos->eliminar();
-            return;
+            return true;
         }
         lArtistasFavoritos->avanzar();
     }
+
+    return false;
 }
 
 void persona::mostrarFavoritos() const { // [cite: 84]
