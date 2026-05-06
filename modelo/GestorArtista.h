@@ -8,8 +8,8 @@
 #if defined(LISTA_ARTISTAS)
     #include "ListaDPI.h"
 #else
-    #include "BStree.h"
-    #include "KeyValue.h"
+    #include "bstree.h"
+    #include "key.h"
 #endif
 
 class GestorArtistas {
