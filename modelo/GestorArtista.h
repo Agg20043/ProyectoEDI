@@ -1,15 +1,27 @@
-//
-// Created by xalva on 07/04/2026.
-//
+#ifndef GESTORARTISTA_H
+#define GESTORARTISTA_H
 
-#ifndef UNTITLED3_GESTORARTISTA_H
-#define UNTITLED3_GESTORARTISTA_H
-#include "ListaDPI.h"
+//#define LISTA_ARTISTAS
+
 #include "Artista.h"
+
+#if defined(LISTA_ARTISTAS)
+    #include "ListaDPI.h"
+#else
+    #include "bstree.h"
+    #include "key.h"
+#endif
 
 class GestorArtistas {
 private:
+
+#if defined(LISTA_ARTISTAS)
     ListaDPI<Artista*> *lArtistas;
+#else
+    BSTree<KeyValue<string, Artista*>> *aArtistas;
+    Artista* buscarRec(BSTree<KeyValue<string, Artista*>>* nodo,
+                       const string& nombre) const;
+#endif
 
 public:
     GestorArtistas();
@@ -22,4 +34,4 @@ public:
     void mostrar() const;
 };
 
-#endif //UNTITLED3_GESTORARTISTA_H
+#endif
