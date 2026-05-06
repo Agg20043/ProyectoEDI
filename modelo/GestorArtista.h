@@ -8,7 +8,7 @@
 #if defined(LISTA_ARTISTAS)
     #include "ListaDPI.h"
 #else
-    #include "bstree.h"
+    #include "BStree.h"
     #include "KeyValue.h"
 #endif
 
