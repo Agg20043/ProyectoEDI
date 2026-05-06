@@ -11,7 +11,7 @@
     #include "ListaDPI.h"
 #else
     #include "bstree.h"
-    #include "key.h"
+    #include "KeyValue.h"
 #endif
 
 using namespace std;
