@@ -7,7 +7,6 @@ GestorUsuarios::GestorUsuarios() {
     aUsuarios = new BSTree<KeyValue<string, persona*>>();
 #endif
 }
-
 GestorUsuarios::~GestorUsuarios() {
 #if defined(LISTA_USUARIOS)
 
