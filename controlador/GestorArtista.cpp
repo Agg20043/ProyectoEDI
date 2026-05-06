@@ -1,79 +1,96 @@
-//
-// Created by xalva on 07/04/2026.
-//
-#include "../modelo/GestorArtista.h"
-#include <iostream>
+#include "GestorArtista.h"
 
 GestorArtistas::GestorArtistas() {
+#if defined(LISTA_ARTISTAS)
     lArtistas = new ListaDPI<Artista*>();
+#else
+    aArtistas = new BSTree<KeyValue<string, Artista*>>();
+#endif
 }
 
-GestorArtistas::GestorArtistas(const GestorArtistas& otro) {
-    lArtistas = new ListaDPI<Artista*>();
-    otro.lArtistas->moverPrimero();
-    while (!otro.lArtistas->alFinal()) {
-        Artista* original = otro.lArtistas->consultar();
-        Artista* copia = new Artista(*original);
-        lArtistas->insertar(copia);
-        otro.lArtistas->avanzar();
-    }
-}
+GestorArtistas::~GestorArtistas() {
+#if defined(LISTA_ARTISTAS)
 
-GestorArtistas::~GestorArtistas() { // [cite: 25]
     lArtistas->moverPrimero();
     while (!lArtistas->alFinal()) {
         delete lArtistas->consultar();
         lArtistas->eliminar();
     }
     delete lArtistas;
+
+#else
+    delete aArtistas;
+#endif
 }
 
-void GestorArtistas::insertar(Artista* artista) { // [cite: 20, 21, 22]
-    lArtistas->moverPrimero();
-    bool existe = false;
+void GestorArtistas::insertar(Artista* artista) {
 
+#if defined(LISTA_ARTISTAS)
+
+    lArtistas->moverPrimero();
     while (!lArtistas->alFinal()) {
-        Artista* a = lArtistas->consultar();
-        if (a->get_nombre() == artista->get_nombre()) {
-            existe = true;
-            break; // Sin duplicados [cite: 22]
-        }
-        if (a->get_nombre() > artista->get_nombre()) {
-            break; // Inserción en orden alfabético [cite: 21]
-        }
+        if (lArtistas->consultar()->get_nombre() > artista->get_nombre())
+            break;
         lArtistas->avanzar();
     }
+    lArtistas->insertar(artista);
 
-    if (!existe) {
-        lArtistas->insertar(artista);
+#else
+
+    KeyValue<string, Artista*> kv(artista->get_nombre(), artista);
+
+    if (!aArtistas->existe(kv)) {
+        aArtistas->insertar(kv);
     }
+
+#endif
 }
 
-Artista* GestorArtistas::buscar(const string& nombre) const { // [cite: 23]
+Artista* GestorArtistas::buscar(const string& nombre) const {
+
+#if defined(LISTA_ARTISTAS)
+
     lArtistas->moverPrimero();
     while (!lArtistas->alFinal()) {
-        Artista* a = lArtistas->consultar();
-        if (a->get_nombre() == nombre) {
-            return a;
-        }
+        if (lArtistas->consultar()->get_nombre() == nombre)
+            return lArtistas->consultar();
         lArtistas->avanzar();
     }
     return nullptr;
+
+#else
+
+    return buscarRec(aArtistas, nombre);
+
+#endif
+}
+
+#if !defined(LISTA_ARTISTAS)
+
+Artista* GestorArtistas::buscarRec(
+    BSTree<KeyValue<string, Artista*>>* nodo,
+    const string& nombre) const {
+
+    if (nodo == nullptr || nodo->estaVacio())
+        return nullptr;
+
+    KeyValue<string, Artista*> kv = nodo->getDato();
+
+    if (kv.getKey() == nombre)
+        return kv.getValue();
+
+    if (nombre < kv.getKey())
+        return buscarRec(nodo->getIzq(), nombre);
+    else
+        return buscarRec(nodo->getDer(), nombre);
+}
+
+#endif
+
+int GestorArtistas::numElementos() const {
+    return 0;
 }
 
 void GestorArtistas::mostrar() const {
-    lArtistas->moverPrimero();
-    while (!lArtistas->alFinal()) {
-        lArtistas->consultar()->mostrar(); // Esto mostrara los artista y sus canciones
-        lArtistas->avanzar();
-    }
-}
-int GestorArtistas::numElementos() const {
-    int contador = 0;
-    lArtistas->moverPrimero();
-    while (!lArtistas->alFinal()) {
-        contador++;
-        lArtistas->avanzar();
-    }
-    return contador;
+    cout << "[MOSTRAR ARBOL NO IMPLEMENTADO]" << endl;
 }
