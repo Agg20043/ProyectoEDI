@@ -258,7 +258,7 @@ GestorUsuarios::GestorUsuarios(const GestorUsuarios& otro) {
     aUsuarios =
         new BSTree<KeyValue<string, persona*>>();
 
-    // Puedes implementar copia recursiva si quieres
+ 
 }
 
 GestorUsuarios::~GestorUsuarios() {
@@ -370,7 +370,7 @@ void GestorUsuarios::mostrarRec(
 
 void GestorUsuarios::mostrar() const {
 
-    cout << "===== USUARIOS BST =====" << endl;
+    cout << " USUARIOS BST =" << endl;
 
     mostrarRec(aUsuarios);
 
