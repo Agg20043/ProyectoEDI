@@ -17,24 +17,47 @@
 using namespace std;
 
 class GestorUsuarios {
+
 private:
 
-//#if defined(LISTA_USUARIOS)
-    ListaDPI<persona*> *lUsuarios;
-//#else
-    BSTree<KeyValue<string, persona*>> *aUsuarios;
-    persona* buscarRec(BSTree<KeyValue<string, persona*>>* nodo,
-                       const string& nombre) const;
-//#endif
+#if defined(LISTA_USUARIOS)
+
+    ListaDPI<persona *> *lUsuarios;
+
+#else
+
+    BSTree<KeyValue<string, persona *>> *aUsuarios;
+
+    persona* buscarRec(
+        BSTree<KeyValue<string, persona *>> *nodo,
+        const string &nombre
+    ) const;
+
+    void mostrarRec(
+        BSTree<KeyValue<string, persona *>> *nodo
+    ) const;
+
+    int contarRec(
+        BSTree<KeyValue<string, persona *>> *nodo
+    ) const;
+#endif
 
 public:
     GestorUsuarios();
+
     GestorUsuarios(const GestorUsuarios& otro);
+
     ~GestorUsuarios();
 
-    void insertar(const string& id, const string& nombre,
-                  const string& email, const string& password,
-                  int d, int m, int a);
+    void insertar(
+        const string& id,
+        const string& nombre,
+        const string& email,
+        const string& password,
+        int d,
+        int m,
+        int a
+    );
 
     persona* buscar(const string& nombre);
 
@@ -44,4 +67,3 @@ public:
 };
 
 #endif
-

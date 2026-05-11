@@ -14,7 +14,6 @@
 
 class GestorArtistas {
 private:
-
     ListaDPI<Artista*> *lArtistas;
 
     BSTree<KeyValue<string, Artista*>> *aArtistas;
