@@ -19,13 +19,13 @@ using namespace std;
 class GestorUsuarios {
 private:
 
-#if defined(LISTA_USUARIOS)
+//#if defined(LISTA_USUARIOS)
     ListaDPI<persona*> *lUsuarios;
-#else
+//#else
     BSTree<KeyValue<string, persona*>> *aUsuarios;
     persona* buscarRec(BSTree<KeyValue<string, persona*>>* nodo,
                        const string& nombre) const;
-#endif
+//#endif
 
 public:
     GestorUsuarios();

@@ -150,6 +150,7 @@ void Sistema::cargarPlayList() {
 void Sistema::mostrarUsuarios() const {
     cout << "Total Usuarios: " << usuarios->numElementos() << endl;
     usuarios->mostrar();
+
 }
 
 void Sistema::mostrarArtistas() const {

@@ -15,13 +15,12 @@
 class GestorArtistas {
 private:
 
-#if defined(LISTA_ARTISTAS)
     ListaDPI<Artista*> *lArtistas;
-#else
+
     BSTree<KeyValue<string, Artista*>> *aArtistas;
     Artista* buscarRec(BSTree<KeyValue<string, Artista*>>* nodo,
                        const string& nombre) const;
-#endif
+
 
 public:
     GestorArtistas();

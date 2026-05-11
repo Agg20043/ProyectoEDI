@@ -1,7 +1,6 @@
 #ifndef ARTISTA_H
 #define ARTISTA_H
 
-#include <iostream>
 #include <string>
 #include "ListaDPI.h"
 #include "cancion.h"

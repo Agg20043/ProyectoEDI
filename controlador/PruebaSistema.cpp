@@ -3,16 +3,16 @@
 //
 
 #include "../modelo/PruebaSistema.h"
-#include "../modelo/Sistema.h";
-#include "../modelo/Artista.h";
+#include "../modelo/Sistema.h"
+#include "../modelo/Artista.h"
 
 using namespace std;
 
 void ejecutar_pruebas_sistema() {
 
-    cout << "\n=============================================" << endl;
+    cout << "=============================================" << endl;
     cout << "    EJECUTANDO PRUEBAS DE LA CLASE SISTEMA" << endl;
-    cout << "=============================================\n" << endl;
+    cout << "=============================================" << endl;
 
     Sistema* miApp = new Sistema();
 

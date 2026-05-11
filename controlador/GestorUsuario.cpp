@@ -1,120 +1,104 @@
-#include "GestorUsuarios.h"
+//
+// Created by xalva on 23/03/2026.
+//
+#include "../modelo/GestorUsuario.h"
 
 GestorUsuarios::GestorUsuarios() {
-#if defined(LISTA_USUARIOS)
     lUsuarios = new ListaDPI<persona*>();
-#else
-    aUsuarios = new BSTree<KeyValue<string, persona*>>();
-#endif
 }
-GestorUsuarios::~GestorUsuarios() {
-#if defined(LISTA_USUARIOS)
 
+GestorUsuarios::GestorUsuarios(const GestorUsuarios& otro) {
+    lUsuarios = new ListaDPI<persona*>();
+
+    // Recorre la lista del gestor original
+    otro.lUsuarios->moverPrimero();
+    while (!otro.lUsuarios->alFinal()) {
+        persona* personaOriginal = otro.lUsuarios->consultar();
+
+        // Crea una nueva instancia usando el constructor por copia de Persona
+        persona* nuevaPersona = new persona(*personaOriginal);
+
+
+        lUsuarios->insertar(nuevaPersona);
+
+        otro.lUsuarios->avanzar();
+    }
+}
+
+GestorUsuarios::~GestorUsuarios() {
     lUsuarios->moverPrimero();
+
     while (!lUsuarios->alFinal()) {
-        delete lUsuarios->consultar();
+        persona* p = lUsuarios->consultar();
+        delete p;
         lUsuarios->eliminar();
     }
+
     delete lUsuarios;
-
-#else
-    delete aUsuarios;
-#endif
 }
 
-void GestorUsuarios::insertar(const string& id, const string& nombre,
-                             const string& email, const string& password,
-                             int d, int m, int a) {
-
-    persona* p = new persona(id, nombre, email, password, d, m, a);
-
-#if defined(LISTA_USUARIOS)
-
+void GestorUsuarios::insertar(const string& id, const string& nombre, const string& email, const string& password, int d, int m, int a) {
     lUsuarios->moverPrimero();
-    while (!lUsuarios->alFinal() &&
-           lUsuarios->consultar()->getNombre() < nombre) {
-        lUsuarios->avanzar();
-    }
-    lUsuarios->insertar(p);
+    bool existe = false;
 
-#else
-
-    KeyValue<string, persona*> kv(nombre, p);
-
-    if (!aUsuarios->existe(kv)) {
-        aUsuarios->insertar(kv);
-    }
-
-#endif
-}
-
-persona* GestorUsuarios::buscar(const string& nombre) {
-
-#if defined(LISTA_USUARIOS)
-
-    lUsuarios->moverPrimero();
     while (!lUsuarios->alFinal()) {
-        if (lUsuarios->consultar()->getNombre() == nombre)
-            return lUsuarios->consultar();
+        persona* p = lUsuarios->consultar();
+
+        if (p->get_nombre() == nombre) {
+            existe = true;
+            cout << "[Aviso] La persona " << nombre << " ya esta registrada." << endl;
+            break;
+        }
+
+        if (p->get_nombre() > nombre) {
+            break;
+        }
+
         lUsuarios->avanzar();
     }
+
+    if (!existe) {
+        persona* nuevaPersona = new persona(id, nombre, email, password, d, m, a);
+
+        lUsuarios->insertar(nuevaPersona);
+    }
+}
+
+// 3. Buscar
+persona* GestorUsuarios::buscar(const string& buscarPersona) {
+    lUsuarios->moverPrimero();
+
+    while (!lUsuarios->alFinal()) {
+        persona* p = lUsuarios->consultar();
+        if (p->get_id() == buscarPersona || p->get_nombre() == buscarPersona) {
+            return p; // Devuelve el puntero a la persona encontrada
+        }
+        lUsuarios->avanzar();
+    }
+
     return nullptr;
-
-#else
-
-    return buscarRec(aUsuarios, nombre);
-
-#endif
 }
-
-#if !defined(LISTA_USUARIOS)
-
-persona* GestorUsuarios::buscarRec(
-    BSTree<KeyValue<string, persona*>>* nodo,
-    const string& nombre) const {
-
-    if (nodo == nullptr || nodo->estaVacio())
-        return nullptr;
-
-    KeyValue<string, persona*> kv = nodo->getDato();
-
-    if (kv.getKey() == nombre)
-        return kv.getValue();
-
-    if (nombre < kv.getKey())
-        return buscarRec(nodo->getIzq(), nombre);
-    else
-        return buscarRec(nodo->getDer(), nombre);
-}
-
-#endif
 
 int GestorUsuarios::numElementos() const {
-#if defined(LISTA_USUARIOS)
-
-    int count = 0;
+    int contador = 0;
     lUsuarios->moverPrimero();
+
     while (!lUsuarios->alFinal()) {
-        count++;
+        contador++;
         lUsuarios->avanzar();
     }
-    return count;
 
-#else
-    return 0;
-#endif
+    return contador;
 }
 
 void GestorUsuarios::mostrar() const {
-#if defined(LISTA_USUARIOS)
+    cout << "--- Lista de Usuarios (" << numElementos() << " registrados) ---" << endl;
 
     lUsuarios->moverPrimero();
     while (!lUsuarios->alFinal()) {
-        lUsuarios->consultar()->mostrar();
+        persona* p = lUsuarios->consultar();
+        p->mostrar(); // Asumimos que Persona tiene un método mostrar()
         lUsuarios->avanzar();
     }
-
-#else
-    cout << "[MOSTRAR NO IMPLEMENTADO EN ARBOL]" << endl;
-#endif
+    cout << "--------------------------------------" << endl;
 }
