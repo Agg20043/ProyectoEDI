@@ -7,12 +7,10 @@
 // En caso de usarse por Listas
 
 GestorArtistas::GestorArtistas() {
-
     lArtistas = new ListaDPI<Artista*>();
 }
 
 GestorArtistas::GestorArtistas(const GestorArtistas& otro) {
-
     lArtistas = new ListaDPI<Artista*>();
     otro.lArtistas->moverPrimero();
     while (!otro.lArtistas->alFinal()) {
@@ -50,6 +48,8 @@ void GestorArtistas::insertar(Artista* artista) {
     if (!existe) {
         lArtistas->insertar(artista);
     }
+	if(existe){
+		cout << "El artista ya está registrado" << endl;
 }
 
 Artista* GestorArtistas::buscar(const string& nombre) const {
@@ -127,16 +127,16 @@ GestorArtistas::GestorArtistas(const GestorArtistas& otro) {
 
 void GestorArtistas::copiarRec(BSTree<KeyValue<string, Artista*>>* nodo) {
     if (nodo->estaVacio()) {
-        return;
-    }
-    KeyValue<string, Artista*> kv = nodo->getDato();
-    Artista* original = kv.getValue();
-    Artista* copia = new Artista(*original);
+    
+    	KeyValue<string, Artista*> kv = nodo->getDato();
+    	Artista* original = kv.getValue();
+    	Artista* copia = new Artista(*original);
 
-    KeyValue<string, Artista*> nuevoKV(kv.getKey(),copia);
-    aArtistas->insertar(nuevoKV);
-    copiarRec(nodo->getIzq());
-    copiarRec(nodo->getDer());
+    	KeyValue<string, Artista*> nuevoKV(kv.getKey(),copia);
+    	aArtistas->insertar(nuevoKV);
+    	copiarRec(nodo->getIzq());
+    	copiarRec(nodo->getDer());
+	}
 }
 
 
@@ -158,6 +158,7 @@ void GestorArtistas::insertar(Artista* artista) {
         KeyValue<string, Artista*> kv(artista->get_nombre(),artista);
         aArtistas->insertar(kv);
     }
+	else cout << "El artista ya existe" << endl;
 }
 
 Artista* GestorArtistas::buscarArbrec(BSTree<KeyValue<string, Artista*>>* nodo, const string& nombre) const {
