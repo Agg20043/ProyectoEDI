@@ -193,7 +193,6 @@ void GestorArtistas::mostrarArbRec(BSTree<KeyValue<string, Artista*>>* nodo) con
 }
 
 void GestorArtistas::mostrar() const {
-    
     mostrarArbRec(aArtistas);
 }
 
