@@ -37,10 +37,11 @@ void leerFichero1() {
     fEnt.open("usuarios.csv");
     if (fEnt.is_open()) {
         getline(fEnt, linea);
+
         // lee la línea cabecera y la ignora
         while(!fEnt.eof()){
             getline(fEnt, linea);
-            if (!fEnt.eof()) { // doble comprobación del eof
+            if (!fEnt.eof()) {
                 cont++;
                 cout << cont << " - " << linea << endl;
             }
@@ -66,12 +67,12 @@ void ejecutarPrueba2() {
     cargarUsuarios(misUsuarios, ficheroOriginal);
 
     //Muestra el archivo
-    cout << "\n--- MOSTRANDO USUARIOS ---" << endl;
+    cout << "--- MOSTRANDO USUARIOS ---" << endl;
     mostrarVector(misUsuarios);
 
 
     int anioBuscado = 2000; //Busca el año
-    cout << "\n--- GUARDANDO USUARIOS NACIDOS EN " << anioBuscado << " ---" << endl;
+    cout << "--- GUARDANDO USUARIOS NACIDOS EN " << anioBuscado << " ---" << endl;
     guardarUsuariosPorAnio(misUsuarios, anioBuscado);
 
     //Carga el archivo
@@ -79,16 +80,16 @@ void ejecutarPrueba2() {
     cargarUsuarios(misUsuariosOut, ficheroOutFecha);
 
     //Muestra el archivo
-    cout << "\n--- MOSTRANDO USUARIOS NACIDOS EN " << anioBuscado << " ---" << endl;
+    cout << "--- MOSTRANDO USUARIOS NACIDOS EN " << anioBuscado << " ---" << endl;
     mostrarVector(misUsuariosOut);
 
 
     //Lee Inverso
-    cout << "\n--- MOSTRANDO FICHERO ORIGINAL EN ORDEN INVERSO ---" << endl;
+    cout << "--- MOSTRANDO FICHERO ORIGINAL EN ORDEN INVERSO ---" << endl;
     leerYMostrarInverso(ficheroOriginal);
 
     //Libera la memoria memoria
-    cout << "\n--- LIBERANDO MEMORIA ---" << endl;
+    cout << "--- LIBERANDO MEMORIA ---" << endl;
     destruirVector(misUsuarios);
     destruirVector(misUsuariosOut);
     cout << "Memoria liberada con exito." << endl;

@@ -19,7 +19,7 @@ GestorArtistas::GestorArtistas(const GestorArtistas& otro) {
     }
 }
 
-GestorArtistas::~GestorArtistas() { // [cite: 25]
+GestorArtistas::~GestorArtistas() {
     lArtistas->moverPrimero();
     while (!lArtistas->alFinal()) {
         delete lArtistas->consultar();
@@ -28,7 +28,7 @@ GestorArtistas::~GestorArtistas() { // [cite: 25]
     delete lArtistas;
 }
 
-void GestorArtistas::insertar(Artista* artista) { // [cite: 20, 21, 22]
+void GestorArtistas::insertar(Artista* artista) {
     lArtistas->moverPrimero();
     bool existe = false;
 
@@ -36,10 +36,10 @@ void GestorArtistas::insertar(Artista* artista) { // [cite: 20, 21, 22]
         Artista* a = lArtistas->consultar();
         if (a->get_nombre() == artista->get_nombre()) {
             existe = true;
-            break; // Sin duplicados [cite: 22]
+            break;
         }
         if (a->get_nombre() > artista->get_nombre()) {
-            break; // Inserción en orden alfabético [cite: 21]
+            break;
         }
         lArtistas->avanzar();
     }
@@ -49,7 +49,7 @@ void GestorArtistas::insertar(Artista* artista) { // [cite: 20, 21, 22]
     }
 }
 
-Artista* GestorArtistas::buscar(const string& nombre) const { // [cite: 23]
+Artista* GestorArtistas::buscar(const string& nombre) const {
     lArtistas->moverPrimero();
     while (!lArtistas->alFinal()) {
         Artista* a = lArtistas->consultar();
@@ -64,7 +64,7 @@ Artista* GestorArtistas::buscar(const string& nombre) const { // [cite: 23]
 void GestorArtistas::mostrar() const {
     lArtistas->moverPrimero();
     while (!lArtistas->alFinal()) {
-        lArtistas->consultar()->mostrar(); // Esto mostrara los artista y sus canciones
+        lArtistas->consultar()->mostrar();
         lArtistas->avanzar();
     }
 }
@@ -88,7 +88,7 @@ void GestorArtistas::mostrarTop() const {
     int maxSeguidores = 0;
     Artista* artistaTop = nullptr;
 
-    // Recorremos la estructura para buscar el máximo
+
     lArtistas->moverPrimero();
     while (!lArtistas->alFinal()) {
         Artista* a = lArtistas->consultar();
@@ -101,7 +101,7 @@ void GestorArtistas::mostrarTop() const {
         lArtistas->avanzar();
     }
 
-    // Imprimimos el resultado
+
     if (artistaTop) {
         cout << "El artista mas seguidores es: " << artistaTop->get_nombre()
              << " con " << maxSeguidores << " seguidores." << endl;

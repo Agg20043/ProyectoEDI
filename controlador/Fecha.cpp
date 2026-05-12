@@ -9,7 +9,7 @@ using namespace std;
 
 
 Fecha::Fecha() {
-    cout << "Constructor Fecha defecto";
+    cout << "Constructor Fecha por defecto";
     dia = 1;
     mes = 1;
     anio = 1982;

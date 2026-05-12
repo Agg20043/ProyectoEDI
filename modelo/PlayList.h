@@ -12,7 +12,7 @@ class PlayList {
     string nombre;
     int numCanciones;
     int duracion; // en segundos
-    Cola<cancion*> *colaReproduccion; // agregación con las canciones
+    Cola<cancion*> *colaReproduccion;
 
 public:
     // Constructores y Destructor

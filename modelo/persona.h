@@ -72,7 +72,7 @@ public:
     void insertarArtistaFavorito(Artista* artista);
 
     bool eliminarArtistaFavorito(const string &nombreArtista);
-    void mostrarFavoritos() const;
+    void mostrarArtistasFavoritos() const;
 };
 
 const int MAX = 100;

@@ -38,7 +38,9 @@ Artista::~Artista() {
     }
     delete lCanciones;
 }
-
+//Pre:
+//Post:
+//Complejidad:
 void Artista::insertarCancion(const string& titulo, const string& genero, int duracion) {
     lCanciones->moverPrimero();
     bool existe = false;
@@ -64,7 +66,9 @@ void Artista::insertarCancion(const string& titulo, const string& genero, int du
         lCanciones->insertar(nuevaCancion);
     }
 }
-
+//Pre:
+//Post:
+//Complejidad:
 cancion* Artista::buscarCancion(const string& titulo) const {
     lCanciones->moverPrimero();
     while (!lCanciones->alFinal()) {
@@ -76,7 +80,9 @@ cancion* Artista::buscarCancion(const string& titulo) const {
     }
     return nullptr;
 }
-
+//Pre:
+//Post:
+//Complejidad:
 int Artista::numElementos() const {
     int contador = 0;
     lCanciones->moverPrimero();
@@ -86,9 +92,11 @@ int Artista::numElementos() const {
     }
     return contador;
 }
-
+//Pre:
+//Post:
+//Complejidad:
 void Artista::mostrar() const {
-    cout << "\n=== ARTISTA: " << nombre << " (" << pais << ") ===" << endl;
+    cout << "=== ARTISTA: " << nombre << " (" << pais << ") ===" << endl;
     cout << "Seguidores: " << num_seguidores << endl;
     cout << "Repertorio (" << numElementos() << " canciones):" << endl;
 
@@ -104,10 +112,15 @@ void Artista::mostrar() const {
     }
     cout << "=====================================" << endl;
 }
+//Pre:
+//Post:
+//Complejidad:
 void Artista::incrementarSeguidores() {
-    num_seguidores++; // Suma 1
+    num_seguidores++;
 }
-
+//Pre:
+//Post:
+//Complejidad:
 void Artista::decrementarSeguidores() {
     if (num_seguidores > 0) {
         num_seguidores--;

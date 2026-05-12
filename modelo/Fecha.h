@@ -16,7 +16,6 @@ public:
 //Pre:
 //Post: Construye una fecha parametrizada
 //Complejidad: o(1)
-    // FORMA CORRECTA
     Fecha(int dia, int mes, int anio) : dia(dia), mes(mes), anio(anio) {
     }
 

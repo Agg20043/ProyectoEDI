@@ -31,7 +31,7 @@ persona::persona(const string &nombre, const int edad, const string &email, cons
 persona::~persona() {
     delete fechaNacimiento;
 
-    // Destruir listas dinámicas [cite: 85]
+    //Destruye las listas dinamicas
     lPlayLists->moverPrimero();
     while (!lPlayLists->alFinal()) {
         delete lPlayLists->consultar();
@@ -41,7 +41,7 @@ persona::~persona() {
 
     lArtistasFavoritos->moverPrimero();
     while (!lArtistasFavoritos->alFinal()) {
-        lArtistasFavoritos->eliminar(); // No hacemos delete del Artista porque el sistema es el dueño
+        lArtistasFavoritos->eliminar();
     }
     delete lArtistasFavoritos;
 }
@@ -50,7 +50,7 @@ void persona::mostrar() const {
     cout << "ID: " << id << endl;
     cout << "Nombre: " << nombre << endl;
     cout << "Email: " << email << endl;
-    cout << "Contrasena: " << password << endl;
+    cout << "Contrasenia: " << password << endl;
     cout << "Nacimiento: ";
     if (fechaNacimiento != nullptr) fechaNacimiento->mostrar();
     cout << "-------------------------" << endl;
@@ -61,13 +61,13 @@ string persona::pasarCadena() const {
     return nombre + ";" + to_string(edad) + ";" + email + ";" + password + ";" + fechaNacimiento->pasarCadena() ;
 }
 
-// ==========================================
-// MÉTODOS DE PLAYLISTS
-// ==========================================
+
+
+//Metodos de las playlist
 void persona::crearPlayList(const string& nombre) {
     lPlayLists->moverPrimero();
     while(!lPlayLists->alFinal()) {
-        if(lPlayLists->consultar()->getNombre() == nombre) return; // Ya existe
+        if(lPlayLists->consultar()->getNombre() == nombre) return;
         lPlayLists->avanzar();
     }
     PlayList* nueva = new PlayList(nombre);
@@ -78,7 +78,6 @@ void persona::anadirCancionPlayList(const string& nombrePlayList, cancion* c) {
     lPlayLists->moverPrimero();
     while(!lPlayLists->alFinal()) {
         if(lPlayLists->consultar()->getNombre() == nombrePlayList) {
-            // Usamos tu método agregarCancion()
             lPlayLists->consultar()->agregarCancion(c);
             return;
         }
@@ -92,7 +91,7 @@ void persona::reproducirPlayList() const {
         cout<<"[AVISO]Este usuario no tiene ninguna PlayList creada"<<endl;
     }
     while(!lPlayLists->alFinal()) {
-        // Usamos tu método reproducirTodo()
+
         lPlayLists->consultar()->reproducirTodo();
         lPlayLists->avanzar();
     }
@@ -126,13 +125,14 @@ bool persona::eliminarPlayList(string nombrePlaylist) {
     return false;
 }
 
-// ==========================================
-// MÉTODOS DE ARTISTAS FAVORITOS
-// ==========================================
+//Metodos de artistas favoritos
 void persona::insertarArtistaFavorito(Artista* artista) {
     lArtistasFavoritos->moverPrimero();
+
     while(!lArtistasFavoritos->alFinal()) {
-        if(lArtistasFavoritos->consultar()->get_nombre() == artista->get_nombre()) return; // Sin duplicados
+
+        if(lArtistasFavoritos->consultar()->get_nombre() == artista->get_nombre()) return;
+
         lArtistasFavoritos->avanzar();
     }
     lArtistasFavoritos->insertar(artista);
@@ -140,9 +140,14 @@ void persona::insertarArtistaFavorito(Artista* artista) {
 
 bool persona::eliminarArtistaFavorito(const string &nombreArtista) {
     lArtistasFavoritos->moverPrimero();
+
     while(!lArtistasFavoritos->alFinal()) {
+
         if(lArtistasFavoritos->consultar()->get_nombre() == nombreArtista) {
+
             lArtistasFavoritos->eliminar();
+
+
             return true;
         }
         lArtistasFavoritos->avanzar();
@@ -151,13 +156,23 @@ bool persona::eliminarArtistaFavorito(const string &nombreArtista) {
     return false;
 }
 
-void persona::mostrarFavoritos() const { // [cite: 84]
-    cout << "Favoritos de " << nombre << ":" << endl;
-    lArtistasFavoritos->moverPrimero();
-    while(!lArtistasFavoritos->alFinal()) {
-        cout << "- " << lArtistasFavoritos->consultar()->get_nombre() << endl;
-        lArtistasFavoritos->avanzar();
+void persona::mostrarArtistasFavoritos() const {
+
+    if (!lArtistasFavoritos->estaVacia()) {
+        cout << "Artistas favoritos de " << nombre << ":" << endl;
+
+        lArtistasFavoritos->moverPrimero();
+
+        while(!lArtistasFavoritos->alFinal()) {
+
+            cout << "- " << lArtistasFavoritos->consultar()->get_nombre() << endl;
+
+            lArtistasFavoritos->avanzar();
+        }
+    } else {
+        cout<< "Este Usuario no tiene ningun artista en favoritos."<<endl;
     }
+
 }
 
 void cargarUsuarios(TVector& vector, const string& nombreFichero) {
@@ -170,44 +185,14 @@ void cargarUsuarios(TVector& vector, const string& nombreFichero) {
     string linea, id, nombre, email, password, temp;
     int d, m, a, i = 0;
 
-    getline(archivo, linea); // Saltar cabecera
+    getline(archivo, linea);
 
     while (getline(archivo, linea) && i < MAX) {
-        if (linea.empty()) continue;
-
-        stringstream ss(linea);
-
-        // Extraer campos básicos
-        getline(ss, id, ';');
-        getline(ss, nombre, ';');
-        getline(ss, email, ';');
-        getline(ss, password, ';');
-
-        try {
-            // Extraer fecha: dd/mm/aaaa
-            getline(ss, temp, '/');
-            d = std::stoi(temp);
-            getline(ss, temp, '/');
-            m = std::stoi(temp);
-            getline(ss, temp); // Lee hasta el final de la línea
-            a = std::stoi(temp);
-
-            // --- EL PASO QUE FALTABA ---
-            // Creamos el objeto y lo metemos en el vector
-            // Asumiendo que guardas punteros:
             vector[i] = new persona(id, nombre, email, password, d, m, a);
-
-            i++; // ¡No olvides aumentar el índice!
-
-        } catch (const std::exception& e) {
-            cerr << "Error procesando línea: " << linea << " -> " << e.what() << endl;
-        }
+            i++;
     }
 
-    // Rellena el resto con nullptr
-    for (; i < MAX; i++) {
-        vector[i] = nullptr;
-    }
+
 
     archivo.close();
 }
@@ -220,6 +205,7 @@ void mostrarVector(const TVector& vector) {
         }
     }
 }
+
 void guardarUsuariosPorAnio(const TVector& vector, int anio) {
     ofstream archivoOut("usuarios_out.csv");
     if (!archivoOut.is_open()) {
@@ -252,7 +238,7 @@ void mostrarInversoRecursivo(ifstream& archivo) {
     }
 }
 
-// Funcion para facilitar la lectura inversa
+
 void leerYMostrarInverso(const string& nombreFichero) {
 
     ifstream archivo(nombreFichero);

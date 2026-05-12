@@ -7,6 +7,8 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+
+
 Sistema::Sistema() : nombreSistema("Sistema por defecto") {
     usuarios = new GestorUsuarios();
     artistas = new GestorArtistas();
@@ -93,7 +95,8 @@ void Sistema::cargarCanciones() {
     getline(archivo, linea);
 
     while (getline(archivo, linea)) {
-        if (linea.empty()) continue; //if para ignorar las lineas vacias
+        if (linea.empty()) continue;
+        //Salta la primera linea del csv (ya que es el nombre de las columnas)
 
         stringstream ss(linea);
         getline(ss, nArtista, ';');
@@ -103,14 +106,10 @@ void Sistema::cargarCanciones() {
 
         Artista* a = artistas->buscar(nArtista);
         if (a) {
-            try {
-
-                int duracion = stoi(durStr);
-                a->insertarCancion(titulo, genero, duracion);
-            } catch (...) {
-                cout << "[Aviso] Duracion no valida para la cancion: " << titulo << endl;
-            }
+            int duracion = stoi(durStr);
+            a->insertarCancion(titulo, genero, duracion);
         }
+
     }
     archivo.close();
 }
@@ -124,7 +123,7 @@ void Sistema::cargarPlayList() {
 
     while (getline(archivo, linea)) {
         if (linea.empty()) continue;
-
+        //Salta las primera fila del csv(Nombres)
         stringstream ss(linea);
         getline(ss, nUsuario, ';');
         getline(ss, nPlaylist, ';');
@@ -162,7 +161,7 @@ void Sistema::buscarUsuario(string nombreYApellidos) const {
     persona* u = usuarios->buscar(nombreYApellidos);
     if (u) {
         u->mostrar();
-        u->mostrarFavoritos();
+        u->mostrarArtistasFavoritos();
         u->reproducirPlayList();
     } else {
         cout << "Usuario no encontrado." << endl;
@@ -185,6 +184,7 @@ void Sistema::compartirPlaylist(string nombreOrigen, string nombrePlaylist, stri
     }
 
     if (origen && destino) {
+
         // Comprueba si el usuario destino ya tiene la playList
         if (destino->compartirPlayList(nombrePlaylist)) {
             cout << "Error: El usuario destino ya tiene una playlist llamada '" << nombrePlaylist << "'." << endl;
@@ -197,8 +197,7 @@ void Sistema::compartirPlaylist(string nombreOrigen, string nombrePlaylist, stri
             destino->anadirPlayListCompartida(copia);
             cout << "Playlist '" << nombrePlaylist << "' compartida con exito." << endl;
 
-            /* Guarda la playList compartida en Playlist.csv y
-             Se añaden los nombres reales para guardarlo en PlayList*/
+
             string nombreRealOrigen = origen->get_nombre();
             string nombreRealDestino = destino->get_nombre();
 
@@ -239,7 +238,7 @@ void Sistema::compartirPlaylist(string nombreOrigen, string nombrePlaylist, stri
             }
         } else {
             //Control de errores que avisa si la playList seleccionada la tiene el usuario origen.
-            cout << "Error: La playlist '" << nombrePlaylist << "' no existe en el usuario de origen." << endl;
+            cout << "[ERROR] La playlist '" << nombrePlaylist << "' no existe en el usuario de origen." << endl;
         }
     }
 }
@@ -254,27 +253,28 @@ Artista* Sistema::buscarArtista(const string& nombre) const {
 
 void Sistema::reproducirPlaylistsUsuario(string nombreUsuario) const {
     persona* u = usuarios->buscar(nombreUsuario);
+
+    //Si el usuario existe reproduce la playlist seleccionada si no saltara un error
     if (u) u->reproducirPlayList();
-    else cout << "Usuario no encontrado." << endl;
+    else cout << "[ERROR] Usuario no encontrado." << endl;
 }
 
 void Sistema::eliminarPlaylistUsuario(string nombreUsuario, string nombrePlaylist) {
-    // 1. Buscamos al usuario por su ID
+    //Buscamos al usuario a traves del id
     persona* u = usuarios->buscar(nombreUsuario);
 
-    // Control de errores: ¿Existe el usuario?
+    // Control de errores para verificar si el usuario existe.
     if (!u) {
         cout << "[ERROR] El usuario con ID '" << nombreUsuario << "' no existe en el sistema." << endl;
         return;
     }
 
-    // 2. Intentamos eliminar la playlist en memoria
     bool eliminada = u->eliminarPlayList(nombrePlaylist);
 
     if (eliminada) {
 
-        // 3. ACTUALIZAR EL CSV (Para que el borrado sea permanente)
-        string nombreRealUsuario = u->get_nombre(); // Tu getter para sacar "Apellidos, Nombre"
+        //actualiza 'playlist.csv' para borrar la playlist del archivo
+        string nombreRealUsuario = u->get_nombre();
 
         ifstream archivoLectura("playList.csv");
         vector<string> lineasRestantes;
@@ -282,7 +282,7 @@ void Sistema::eliminarPlaylistUsuario(string nombreUsuario, string nombrePlaylis
         if (archivoLectura.is_open()) {
             string linea, nUsu, nPlay;
 
-            // Guardamos la cabecera para no perderla
+            // Guardamos la cabecera para no perderla a la hora de borrar una playList
             getline(archivoLectura, linea);
             lineasRestantes.push_back(linea);
 
@@ -293,7 +293,7 @@ void Sistema::eliminarPlaylistUsuario(string nombreUsuario, string nombrePlaylis
                 getline(ss, nUsu, ';');
                 getline(ss, nPlay, ';');
 
-                // Si la línea NO es del usuario y NO es la playlist a borrar, nos la quedamos
+                // Si la línea no es del usuario y no es la playlist que vamos a borrar, se queda
                 if (!(nUsu == nombreRealUsuario && nPlay == nombrePlaylist)) {
                     lineasRestantes.push_back(linea);
                 }
@@ -306,7 +306,7 @@ void Sistema::eliminarPlaylistUsuario(string nombreUsuario, string nombrePlaylis
                     archivoEscritura << l << endl;
                 }
                 archivoEscritura.close();
-                cout << "La playlist ha sido borrada del archivo permanentemente." << endl;
+                cout << "[EXITO] La playlist ha sido borrada." << endl;
             }
         }
     } else {
@@ -332,7 +332,7 @@ void Sistema::anadirFavoritoUsuario(string nombreUsuario, string nombreArtista) 
 
     a->incrementarSeguidores();
 
-    cout << "[EXITO] Artista '" << a->get_nombre() << "' anadido a los favoritos de " << u->get_nombre() << "." << endl;
+    cout << "[EXITO] Artista '" << a->get_nombre() << "' añadido a los favoritos de " << u->get_nombre() << "." << endl;
 }
 
 void Sistema::eliminarFavoritoUsuario(string nombreUsuario, string nombreArtista) {
@@ -343,7 +343,6 @@ void Sistema::eliminarFavoritoUsuario(string nombreUsuario, string nombreArtista
         return;
     }
 
-    // Intentamos eliminarlo de la lista personal del usuario
     bool eliminado = u->eliminarArtistaFavorito(nombreArtista);
 
     if (eliminado) {
@@ -358,6 +357,7 @@ void Sistema::eliminarFavoritoUsuario(string nombreUsuario, string nombreArtista
         cout << "[ERROR] El artista '" << nombreArtista << "' no estaba en los favoritos de este usuario." << endl;
     }
 }
+
 void Sistema::mostrarArtistaTop() const {
 cout << "--- TOP ARTISTAS CON MAS SEGUIDORES DEL SISTEMA ---" << endl;
 artistas->mostrarTop();

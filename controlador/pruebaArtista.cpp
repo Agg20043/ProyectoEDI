@@ -7,7 +7,7 @@
 using namespace std;
 
 void ejecutar_pruebas_artista() {
-    cout << "\n=== INICIANDO PRUEBAS DINÁMICAS DE ARTISTA ===" << endl;
+    cout << "=== INICIANDO PRUEBAS DINÁMICAS DE ARTISTA ===" << endl;
 
     cout << "Creando artista1 (Por defecto)..." << endl;
     Artista* artista1 = new Artista();
@@ -78,7 +78,6 @@ void ejecutar_pruebas_artista() {
     if (artista1->buscarCancion("Runaway") == nullptr) {
         cout << " -> CORRECTO: 'Runaway' no esta registrada y devolvio nullptr." << endl;
     }
-    // =========================================================================
 
 
     cout << "Delete..." << endl;
