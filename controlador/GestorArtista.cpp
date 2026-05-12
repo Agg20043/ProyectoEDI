@@ -66,30 +66,22 @@ Artista* GestorArtistas::buscar(const string& nombre) const {
 }
 
 void GestorArtistas::mostrar() const {
-
     lArtistas->moverPrimero();
-
     while (!lArtistas->alFinal()) {
-
         lArtistas->consultar()->mostrar();
-
         lArtistas->avanzar();
     }
 }
 
 int GestorArtistas::numElementos() const {
-
     int contador = 0;
-
     lArtistas->moverPrimero();
-
     while (!lArtistas->alFinal()) {
-
+		
         contador++;
-
         lArtistas->avanzar();
+	
     }
-
     return contador;
 }
 
@@ -103,20 +95,17 @@ void GestorArtistas::mostrarTop() const {
     int maxSeguidores = 0;
     Artista* top = nullptr;
     lArtistas->moverPrimero();
-
     while (!lArtistas->alFinal()) {
-        
         Artista* a = lArtistas->consultar();
-        
         if (a->get_num_seguidores() > maxSeguidores) {
         maxSeguidores = a->get_num_seguidores();
 	    top = a;
         }
+		
         lArtistas->avanzar();
     }
 
     if (top != nullptr) {
-
         cout << "El artista más top es: " << top->get_nombre() << " tiene " << maxSeguidores << " seguidores." << endl;
     }
 }
@@ -140,7 +129,6 @@ void GestorArtistas::copiarRec(BSTree<KeyValue<string, Artista*>>* nodo) {
     if (nodo->estaVacio()) {
         return;
     }
-
     KeyValue<string, Artista*> kv = nodo->getDato();
     Artista* original = kv.getValue();
     Artista* copia = new Artista(*original);
