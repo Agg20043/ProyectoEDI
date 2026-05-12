@@ -82,17 +82,17 @@ GestorUsuarios::GestorUsuarios() {
     aUsuarios = new BSTree<KeyValue<string, persona*>>();
 }
 
-void GestorArtistas::copiarRec(BSTree<KeyValue<string, persona*>>* origen, BSTree<KeyValue<string, persona*>>* destino) {
+void GestorUsuarios::copiarRec(BSTree<KeyValue<string, persona*>>* origen, BSTree<KeyValue<string, persona*>>* destino) {
     if (!origen->estaVacio()) {
         
-        KeyValue<string, persona*> kv = nodo->getDato();
+        KeyValue<string, persona*> kv = destino->getDato();
         persona* original = kv.getValue();
         persona* copia = new persona(*original);
         
         KeyValue<string, persona*> nuevoKV(kv.getKey(), copia);
         aUsuarios->insertar(nuevoKV);
-        copiarRecursivo(origen->getIzq(), destino);
-        copiarRecursivo(origen->getDer(), destino);
+        copiarRec(origen->getIzq(), destino);
+        copiarRec(origen->getDer(), destino);
     }
 }
 

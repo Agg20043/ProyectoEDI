@@ -202,11 +202,11 @@ int GestorArtistas::contarArbolrecursivoYtal(BSTree<KeyValue<string, Artista*>>*
         return 0;
     }
 
-    return 1 + contarArbolRecursivoYtal(nodo->getIzq()) + contarArbolRecursivoyTal(nodo->getDer());
+    return 1 + contarArbolrecursivoYtal(nodo->getIzq()) + contarArbolrecursivoYtal(nodo->getDer());
 }
 
 int GestorArtistas::numElementos() const {
-    return contarArbolRecursivoYtal(aArtistas);
+    return contarArbolrecursivoYtal(aArtistas);
 }
 
 void GestorArtistas::topArblrec(BSTree<KeyValue<string, Artista*>>* nodo, Artista*& top, int& maxSeguidores) const {

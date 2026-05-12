@@ -1,7 +1,7 @@
 #ifndef GESTORUSUARIOS_H
 #define GESTORUSUARIOS_H
 
-#define LISTA_USUARIOS
+//#define LISTA_USUARIOS
 
 #include "persona.h"
 #include <string>
@@ -37,8 +37,17 @@ public:
     ~GestorUsuarios();
 
     void insertar(const string& id, const string& nombre, const string& email, const string& password, int d, int m, int a);
+
+    persona *buscarRec(BSTree<KeyValue<string, persona *>> *nodo, const string &nombre) const;
+
     persona* buscar(const string& nombre);
+
+    int contarRec(BSTree<KeyValue<string, persona *>> *nodo) const;
+
     int numElementos() const;
+
+    void mostrarRec(BSTree<KeyValue<string, persona *>> *nodo) const;
+
     void mostrar() const;
 };
 

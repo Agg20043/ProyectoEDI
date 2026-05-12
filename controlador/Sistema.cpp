@@ -157,9 +157,10 @@ void Sistema::mostrarArtistas() const {
     artistas->mostrar();
 }
 
-void Sistema::buscarUsuario(string nombreYApellidos) const {
-    persona* u = usuarios->buscar(nombreYApellidos);
+void Sistema::buscarUsuario(string idUsuario) const {
+    persona* u = usuarios->buscar(idUsuario);
     if (u) {
+
         u->mostrar();
         u->mostrarArtistasFavoritos();
         u->reproducirPlayList();
@@ -251,21 +252,21 @@ Artista* Sistema::buscarArtista(const string& nombre) const {
     return artistas->buscar(nombre);
 }
 
-void Sistema::reproducirPlaylistsUsuario(string nombreUsuario) const {
-    persona* u = usuarios->buscar(nombreUsuario);
+void Sistema::reproducirPlaylistsUsuario(string idUsuario) const {
+    persona* u = usuarios->buscar(idUsuario);
 
     //Si el usuario existe reproduce la playlist seleccionada si no saltara un error
     if (u) u->reproducirPlayList();
     else cout << "[ERROR] Usuario no encontrado." << endl;
 }
 
-void Sistema::eliminarPlaylistUsuario(string nombreUsuario, string nombrePlaylist) {
+void Sistema::eliminarPlaylistUsuario(string idUsuario, string nombrePlaylist) {
     //Buscamos al usuario a traves del id
-    persona* u = usuarios->buscar(nombreUsuario);
+    persona* u = usuarios->buscar(idUsuario);
 
     // Control de errores para verificar si el usuario existe.
     if (!u) {
-        cout << "[ERROR] El usuario con ID '" << nombreUsuario << "' no existe en el sistema." << endl;
+        cout << "[ERROR] El usuario con ID '" << idUsuario << "' no existe en el sistema." << endl;
         return;
     }
 

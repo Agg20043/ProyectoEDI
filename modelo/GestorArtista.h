@@ -42,14 +42,25 @@ public:
 
     GestorArtistas();
     GestorArtistas(const GestorArtistas& otro);
+
+    void copiarRec(BSTree<KeyValue<string, Artista *>> *nodo);
+
     ~GestorArtistas();
 
     void insertar(Artista* artista);
+
+    Artista *buscarArbrec(BSTree<KeyValue<string, Artista *>> *nodo, const string &nombre) const;
+
     int numElementos() const;
     void mostrarTop() const;
 
     Artista* buscar(const string& nombre) const;
+
+    void mostrarArbRec(BSTree<KeyValue<string, Artista *>> *nodo) const;
+
     void mostrar() const;
+
+    int contarArbolrecursivoYtal(BSTree<KeyValue<string, Artista *>> *nodo) const;
 };
 
 #endif
