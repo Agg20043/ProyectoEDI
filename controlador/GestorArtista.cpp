@@ -241,7 +241,7 @@ void GestorArtistas::mostrarTop() const {
     }
 }
 
-int GestorUsuarios::calcularProfundidad(BSTree<KeyValue<string, Artista *>> *nodo) const{
+int GestorArtistas::calcularProfundidad(BSTree<KeyValue<string, Artista *>> *nodo) const{
     int z;
     int nodoizqui;
     int nododere;
