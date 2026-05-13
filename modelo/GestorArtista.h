@@ -29,12 +29,11 @@ private:
 #else
 
     BSTree<KeyValue<string, Artista*>> *aArtistas;
-    Artista* buscarArb(BSTree<KeyValue<string, Artista*>>* nodo, const string& nombre) const;
-
-    void mostrarArbrec(BSTree<KeyValue<string, Artista*>>* nodo) const;
-    int contarArbrec(BSTree<KeyValue<string, Artista*>>* nodo) const;
+    Artista* buscarArbrec(BSTree<KeyValue<string, Artista*>>* nodo, const string& nombre) const;
+    void mostrarArbRec(BSTree<KeyValue<string, Artista*>>* nodo) const;
+    int contarArbolrecursivoYtal(BSTree<KeyValue<string, Artista*>>* nodo) const;
     void topArblrec(BSTree<KeyValue<string, Artista*>>* nodo,Artista*& top,int& maxSeguidores) const;
-    void copiarArbolrec(BSTree<KeyValue<string, Artista*>>* nodo);
+    void copiarRec(BSTree<KeyValue<string, Artista*>>* nodo);
 
 #endif
 
@@ -42,25 +41,13 @@ public:
 
     GestorArtistas();
     GestorArtistas(const GestorArtistas& otro);
-
-    void copiarRec(BSTree<KeyValue<string, Artista *>> *nodo);
-
     ~GestorArtistas();
 
     void insertar(Artista* artista);
-
-    Artista *buscarArbrec(BSTree<KeyValue<string, Artista *>> *nodo, const string &nombre) const;
-
     int numElementos() const;
     void mostrarTop() const;
-
     Artista* buscar(const string& nombre) const;
-
-    void mostrarArbRec(BSTree<KeyValue<string, Artista *>> *nodo) const;
-
     void mostrar() const;
-
-    int contarArbolrecursivoYtal(BSTree<KeyValue<string, Artista *>> *nodo) const;
 };
 
 #endif
