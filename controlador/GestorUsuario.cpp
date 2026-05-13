@@ -154,6 +154,7 @@ void GestorUsuarios::mostrarRec(BSTree<KeyValue<string, persona*>>* nodo) const 
 }
 
 void GestorUsuarios::mostrar() const {
+    cout << "Profundidad del arbolico: " << calcularProfundidad(aUsuarios) << endl;
     cout << "Usuarios que hay, mostrador por el árbol:" << endl;
     mostrarRec(aUsuarios);
     cout << "El total: " << numElementos() << endl;
@@ -172,5 +173,6 @@ int GestorUsuarios::calcularProfundidad(BSTree<KeyValue<string, persona *>> *nod
         z = nodoizqui;
     }
     else z = nododere;
+    return z;
 }
 #endif
