@@ -24,10 +24,11 @@ private:
 #else
 
     BSTree<KeyValue<string, persona *>> *aUsuarios;
-    persona* buscarArbolRec(BSTree<KeyValue<string, persona *>> *nodo, const string &nombre) const;
-    void mostrarArbolRec(BSTree<KeyValue<string, persona *>> *nodo) const;
-    int contarArbolRec(BSTree<KeyValue<string, persona *>> *nodo) const;
+    persona *buscarRec(BSTree<KeyValue<string, persona *>> *nodo, const string &nombre) const;
+    void mostrarRec(BSTree<KeyValue<string, persona *>> *nodo) const;
+    int contarRec(BSTree<KeyValue<string, persona *>> *nodo) const;
     void copiarRec(BSTree<KeyValue<string, persona*>>* origen, BSTree<KeyValue<string, persona*>>* destino);
+    int calcularProfundidad(BSTree<KeyValue<string, persona *>> *nodo) const;
 
 #endif
 
@@ -37,20 +38,10 @@ public:
     ~GestorUsuarios();
 
     void insertar(const string& id, const string& nombre, const string& email, const string& password, int d, int m, int a);
-
-    persona *buscarRec(BSTree<KeyValue<string, persona *>> *nodo, const string &nombre) const;
-
     persona* buscar(const string& nombre);
-
-    int contarRec(BSTree<KeyValue<string, persona *>> *nodo) const;
-
     int numElementos() const;
-
-    void mostrarRec(BSTree<KeyValue<string, persona *>> *nodo) const;
-
     void mostrar() const;
 
-    int calcularProfundidad(BSTree<KeyValue<string, persona *>> *nodo) const;
 };
 
 #endif
