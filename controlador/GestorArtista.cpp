@@ -240,4 +240,19 @@ void GestorArtistas::mostrarTop() const {
     }
 }
 
+int GestorUsuarios::calcularProfundidad(BSTree<KeyValue<string, Artista *>> *nodo) const{
+    int z;
+    int nodoizqui;
+    int nododere;
+    if(nodo != nullptr || !(nodo->estaVacio()){
+        nodoizqui = calcularProfundidad(nodo->getIzq());
+        nododere = calcularProfundidad(nodo->getDer());
+    }
+    else z = 0;
+    if(nodoizqui >= nododere){
+        z = nodoizqui;
+    }
+    else z = nododere;
+}
+
 #endif
