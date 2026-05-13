@@ -89,7 +89,7 @@ void GestorArtistas::mostrarTop() const {
 
     if (lArtistas->estaVacia()) {
         cout << "No hay artistas." << endl;
-        return //como no hay artistas, acaba la función;
+        return //como no hay artistas, acaba la funcioncilla;
     }
 
     int maxSeguidores = 0;
@@ -194,6 +194,7 @@ void GestorArtistas::mostrarArbRec(BSTree<KeyValue<string, Artista*>>* nodo) con
 }
 
 void GestorArtistas::mostrar() const {
+cout << "La profundidad del árbol es de: " << calcularProfundidad(aArtistas) << endl;	
     mostrarArbRec(aArtistas);
 }
 
@@ -253,6 +254,7 @@ int GestorUsuarios::calcularProfundidad(BSTree<KeyValue<string, Artista *>> *nod
         z = nodoizqui;
     }
     else z = nododere;
+	return z;
 }
 
 #endif
