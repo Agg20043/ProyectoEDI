@@ -34,6 +34,7 @@ private:
     int contarArbolrecursivoYtal(BSTree<KeyValue<string, Artista*>>* nodo) const;
     void topArblrec(BSTree<KeyValue<string, Artista*>>* nodo,Artista*& top,int& maxSeguidores) const;
     void copiarRec(BSTree<KeyValue<string, Artista*>>* nodo);
+    int GestorUsuarios::calcularProfundidad(BSTree<KeyValue<string, Artista *>> *nodo) const;
 
 #endif
 
