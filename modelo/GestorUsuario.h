@@ -49,6 +49,8 @@ public:
     void mostrarRec(BSTree<KeyValue<string, persona *>> *nodo) const;
 
     void mostrar() const;
+
+    int calcularProfundidad(BSTree<KeyValue<string, persona *>> *nodo) const;
 };
 
 #endif
