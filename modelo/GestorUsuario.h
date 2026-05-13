@@ -1,6 +1,5 @@
 #ifndef GESTORUSUARIOS_H
 #define GESTORUSUARIOS_H
-
 //#define LISTA_USUARIOS
 
 #include "persona.h"
