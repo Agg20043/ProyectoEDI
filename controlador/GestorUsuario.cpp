@@ -159,4 +159,18 @@ void GestorUsuarios::mostrar() const {
     cout << "El total: " << numElementos() << endl;
 }
 
+int GestorUsuarios::calcularProfundidad(BSTree<KeyValue<string, persona *>> *nodo) const{
+    int z;
+    int nodoizqui;
+    int nododere;
+    if(nodo != nullptr || !(nodo->estaVacio()){
+        nodoizqui = calcularProfundidad(nodo->getIzq());
+        nododere = calcularProfundidad(nodo->getDer());
+    }
+    else z = 0;
+    if(nodoizqui >= nododere){
+        z = nodoizqui;
+    }
+    else z = nododere;
+}
 #endif
